@@ -10,10 +10,14 @@ body {
   background: black;
   color: white;
   font-family: Helvetica, Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 
-/* subtle film grain overlay */
+/* subtle grain */
 body::before {
   content: "";
   position: fixed;
@@ -24,206 +28,60 @@ body::before {
   pointer-events: none;
 }
 
-/* INTRO */
-#intro {
-  position: fixed;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: black;
-  z-index: 10;
-  transition: opacity 2s ease;
-}
-
-#intro h1 {
-  font-weight: 300;
-  font-size: 1.2rem;
-  letter-spacing: 3px;
-  opacity: 0.7;
-}
-
-/* MAIN */
-.container {
-  position: absolute;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 60px;
+#text {
+  max-width: 800px;
+  text-align: center;
+  font-size: 1.6rem;
+  line-height: 2.6rem;
+  letter-spacing: 0.2px;
   opacity: 0;
   transition: opacity 1.5s ease;
 }
 
-.active { opacity: 1; }
-
-/* TEXT LAYER (expanded) */
-.hover-text {
-  max-width: 700px;
-}
-
-.hover-text p {
-  font-size: 1.6rem;
-  line-height: 2.4rem;
-  margin: 18px 0;
-  letter-spacing: 0.3px;
-}
-
-.hover-text .small {
+.small {
   font-size: 1rem;
   opacity: 0.6;
-  margin-top: 40px;
 }
 
-.blur {
-  filter: blur(9px);
-  opacity: 0.5;
-  transition: 1s;
+/* soft fade states */
+.show {
+  opacity: 1 !important;
 }
-
-.blur:hover {
-  filter: blur(0px);
-  opacity: 1;
-}
-
-/* GRID (more cinematic now) */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 25px;
-  max-width: 750px;
-}
-
-.box {
-  padding: 35px 20px;
-  border: 1px solid rgba(255,255,255,0.15);
-  font-size: 0.9rem;
-  line-height: 1.4rem;
-  opacity: 0.9;
-}
-
-/* REDACTED (more text-heavy now) */
-.redacted {
-  max-width: 700px;
-  font-size: 1.05rem;
-  line-height: 2.1rem;
-}
-
-.blackout {
-  background: white;
-  color: white;
-}
-
-/* NAV */
-.nav {
-  position: fixed;
-  bottom: 25px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-}
-
-.dot {
-  width: 7px;
-  height: 7px;
-  border: 1px solid white;
-  border-radius: 50%;
-  opacity: 0.35;
-  cursor: pointer;
-}
-
-.dot.active { opacity: 1; }
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
-<div id="intro">
-  <h1>WHAT IS NOT SHOWN</h1>
-</div>
-
-<!-- LAYER 1 -->
-<div class="container active" id="one">
-  <div class="hover-text">
-    <p>what is <span class="blur">unseen</span> is not absence, but structure.</p>
-
-    <p>silence does not function as emptiness—it functions as <span class="blur">pressure</span>.</p>
-
-    <p>every line of dialogue carries an invisible counterline beneath it.</p>
-
-    <p>meaning forms in the space where articulation fails or refuses itself.</p>
-
-    <p class="small">
-      I am interested in narrative as residue—what remains after meaning has been partially erased.
-    </p>
-  </div>
-</div>
-
-<!-- LAYER 2 -->
-<div class="container" id="two">
-  <div class="grid">
-    <div class="box">silence as structure, not absence</div>
-    <div class="box">dialogue as concealment mechanism</div>
-    <div class="box">framing as psychological boundary</div>
-    <div class="box">interiority shaping external motion</div>
-    <div class="box">image as partial truth</div>
-    <div class="box">story existing between cuts</div>
-  </div>
-</div>
-
-<!-- LAYER 3 -->
-<div class="container" id="three">
-  <div class="redacted">
-    I am drawn to the tension between what is visible and what refuses visibility.<br><br>
-
-    My work treats narrative as something unstable—something that leaks, shifts, and reconfigures itself depending on what is withheld from it.<br><br>
-
-    A character does not simply speak; they displace meaning through speech.<br><br>
-
-    A frame does not contain reality; it interrupts it.<br><br>
-
-    I am interested in the emotional logic of omission—how what is not said reorganizes everything that is.<br><br>
-
-    I make films that exist slightly off from articulation.<br><br>
-
-    Not incomplete—<br>
-    but intentionally unresolved.
-  </div>
-</div>
-
-<!-- NAV -->
-<div class="nav">
-  <div class="dot active" onclick="show(0)"></div>
-  <div class="dot" onclick="show(1)"></div>
-  <div class="dot" onclick="show(2)"></div>
-</div>
+<div id="text"></div>
 
 <script>
-let sections = ["one","two","three"];
-let dots = document.querySelectorAll(".dot");
+const states = [
+`what is unseen is not absence<br>it is structure<br><br><span class="small">meaning begins before it is visible</span>`,
 
-function show(i){
-  sections.forEach((id,idx)=>{
-    document.getElementById(id).classList.remove("active");
-    dots[idx].classList.remove("active");
-  });
+`silence functions as pressure<br>not emptiness<br><br>dialogue conceals as much as it reveals`,
 
-  document.getElementById(sections[i]).classList.add("active");
-  dots[i].classList.add("active");
+`the frame interrupts reality<br>rather than contains it<br><br>what is outside the frame is still active`,
+
+`interiority shapes every external action<br><br>nothing exists in isolation from what is withheld`,
+
+`I do not construct stories<br>I construct conditions in which stories fail to settle<br><br><span class="small">this is where meaning forms</span>`
+];
+
+let i = 0;
+const el = document.getElementById("text");
+
+function cycle() {
+  el.classList.remove("show");
+
+  setTimeout(() => {
+    el.innerHTML = states[i];
+    el.classList.add("show");
+    i = (i + 1) % states.length;
+  }, 1200);
 }
 
-window.onload = () => {
-  setTimeout(()=>{
-    document.getElementById("intro").style.opacity = "0";
-    setTimeout(()=>{
-      document.getElementById("intro").style.display = "none";
-    },2000);
-  },2000);
-};
+cycle();
+setInterval(cycle, 5000);
 </script>
 
 </body>
