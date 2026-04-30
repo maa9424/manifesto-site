@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Manifesto</title>
+
+<style>
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: Helvetica, Arial, sans-serif;
+  overflow: hidden;
+}
+
+/* === LANDING SCREEN === */
+#intro {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: opacity 1.8s ease;
+}
+
+#intro h1 {
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  font-weight: 300;
+  opacity: 0.7;
+}
+
+/* MAIN */
+.container {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.active {
+  opacity: 1;
+}
+
+/* HOVER MANIFESTO */
+.hover-text p {
+  font-size: 2rem;
+  margin: 25px 0;
+  letter-spacing: 0.5px;
+}
+
+.blur {
+  filter: blur(10px);
+  opacity: 0.6;
+  transition: all 0.8s ease;
+}
+
+.blur:hover {
+  filter: blur(0px);
+  opacity: 1;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  max-width: 700px;
+}
+
+.box {
+  padding: 40px 20px;
+  border: 1px solid rgba(255,255,255,0.2);
+  font-size: 0.95rem;
+}
+
+/* REDACTED */
+.redacted {
+  max-width: 650px;
+  font-size: 1.2rem;
+  line-height: 2;
+}
+
+.blackout {
+  background: white;
+  color: white;
+}
+
+/* NAV */
+.nav {
+  position: fixed;
+  bottom: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border: 1px solid white;
+  border-radius: 50%;
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+.dot.active {
+  opacity: 1;
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO / LANDING -->
+<div id="intro">
+  <h1>WHAT IS NOT SHOWN</h1>
+</div>
+
+<!-- REVEAL -->
+<div class="container active" id="one">
+  <div class="hover-text">
+    <p>what is <span class="blur">unseen</span></p>
+    <p>silence is <span class="blur">not empty</span></p>
+    <p>dialogue <span class="blur">conceals</span></p>
+    <p>meaning lives <span class="blur">between</span></p>
+    <p>I work in the <span class="blur">in-between</span></p>
+  </div>
+</div>
+
+<!-- GRID -->
+<div class="container" id="two">
+  <div class="grid">
+    <div class="box">silence is active</div>
+    <div class="box">dialogue conceals</div>
+    <div class="box">absence shapes meaning</div>
+    <div class="box">what is unseen matters</div>
+    <div class="box">interiority drives action</div>
+    <div class="box">truth resists language</div>
+  </div>
+</div>
+
+<!-- REDACTED -->
+<div class="container" id="three">
+  <div class="redacted">
+    I am drawn to the <span class="blackout">visible</span> and what remains hidden.<br><br>
+    My work explores the space between <span class="blackout">seen</span> and unseen.<br><br>
+    Meaning is constructed through absence, silence, implication.<br><br>
+    Dialogue <span class="blackout">communicates clearly</span> conceals.<br><br>
+    I create work where a surface story coexists with something deeper.<br><br>
+    Something just beyond reach.<br><br>
+    I inhabit the in-between.
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="dot active" onclick="show(0)"></div>
+  <div class="dot" onclick="show(1)"></div>
+  <div class="dot" onclick="show(2)"></div>
+</div>
+
+<script>
+let sections = ["one","two","three"];
+let dots = document.querySelectorAll(".dot");
+
+/* NAV */
+function show(index) {
+  sections.forEach((id,i)=>{
+    document.getElementById(id).classList.remove("active");
+    dots[i].classList.remove("active");
+  });
+
+  document.getElementById(sections[index]).classList.add("active");
+  dots[index].classList.add("active");
+}
+
+/* INTRO TIMING */
+window.onload = () => {
+  setTimeout(() => {
+    document.getElementById("intro").style.opacity = "0";
+    setTimeout(() => {
+      document.getElementById("intro").style.display = "none";
+    }, 1800);
+  }, 1800);
+};
+</script>
+
+</body>
+</html>
