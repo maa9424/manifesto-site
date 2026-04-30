@@ -13,23 +13,34 @@ body {
   overflow: hidden;
 }
 
-/* === LANDING SCREEN === */
+/* subtle film grain overlay */
+body::before {
+  content: "";
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: url('https://grainy-gradients.vercel.app/noise.svg');
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+/* INTRO */
 #intro {
   position: fixed;
   width: 100%;
   height: 100vh;
-  background: black;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: black;
   z-index: 10;
-  transition: opacity 1.8s ease;
+  transition: opacity 2s ease;
 }
 
 #intro h1 {
-  font-size: 1.1rem;
-  letter-spacing: 2px;
   font-weight: 300;
+  font-size: 1.2rem;
+  letter-spacing: 3px;
   opacity: 0.7;
 }
 
@@ -41,27 +52,35 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 40px;
+  padding: 60px;
   opacity: 0;
-  transition: opacity 1.2s ease;
+  transition: opacity 1.5s ease;
 }
 
-.active {
-  opacity: 1;
+.active { opacity: 1; }
+
+/* TEXT LAYER (expanded) */
+.hover-text {
+  max-width: 700px;
 }
 
-/* HOVER MANIFESTO */
 .hover-text p {
-  font-size: 2rem;
-  margin: 25px 0;
-  letter-spacing: 0.5px;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  margin: 18px 0;
+  letter-spacing: 0.3px;
+}
+
+.hover-text .small {
+  font-size: 1rem;
+  opacity: 0.6;
+  margin-top: 40px;
 }
 
 .blur {
-  filter: blur(10px);
-  opacity: 0.6;
-  transition: all 0.8s ease;
+  filter: blur(9px);
+  opacity: 0.5;
+  transition: 1s;
 }
 
 .blur:hover {
@@ -69,25 +88,27 @@ body {
   opacity: 1;
 }
 
-/* GRID */
+/* GRID (more cinematic now) */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  max-width: 700px;
+  gap: 25px;
+  max-width: 750px;
 }
 
 .box {
-  padding: 40px 20px;
-  border: 1px solid rgba(255,255,255,0.2);
-  font-size: 0.95rem;
+  padding: 35px 20px;
+  border: 1px solid rgba(255,255,255,0.15);
+  font-size: 0.9rem;
+  line-height: 1.4rem;
+  opacity: 0.9;
 }
 
-/* REDACTED */
+/* REDACTED (more text-heavy now) */
 .redacted {
-  max-width: 650px;
-  font-size: 1.2rem;
-  line-height: 2;
+  max-width: 700px;
+  font-size: 1.05rem;
+  line-height: 2.1rem;
 }
 
 .blackout {
@@ -98,68 +119,79 @@ body {
 /* NAV */
 .nav {
   position: fixed;
-  bottom: 30px;
+  bottom: 25px;
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border: 1px solid white;
   border-radius: 50%;
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: pointer;
 }
 
-.dot.active {
-  opacity: 1;
-}
+.dot.active { opacity: 1; }
 </style>
 </head>
 
 <body>
 
-<!-- INTRO / LANDING -->
+<!-- INTRO -->
 <div id="intro">
   <h1>WHAT IS NOT SHOWN</h1>
 </div>
 
-<!-- REVEAL -->
+<!-- LAYER 1 -->
 <div class="container active" id="one">
   <div class="hover-text">
-    <p>what is <span class="blur">unseen</span></p>
-    <p>silence is <span class="blur">not empty</span></p>
-    <p>dialogue <span class="blur">conceals</span></p>
-    <p>meaning lives <span class="blur">between</span></p>
-    <p>I work in the <span class="blur">in-between</span></p>
+    <p>what is <span class="blur">unseen</span> is not absence, but structure.</p>
+
+    <p>silence does not function as emptiness—it functions as <span class="blur">pressure</span>.</p>
+
+    <p>every line of dialogue carries an invisible counterline beneath it.</p>
+
+    <p>meaning forms in the space where articulation fails or refuses itself.</p>
+
+    <p class="small">
+      I am interested in narrative as residue—what remains after meaning has been partially erased.
+    </p>
   </div>
 </div>
 
-<!-- GRID -->
+<!-- LAYER 2 -->
 <div class="container" id="two">
   <div class="grid">
-    <div class="box">silence is active</div>
-    <div class="box">dialogue conceals</div>
-    <div class="box">absence shapes meaning</div>
-    <div class="box">what is unseen matters</div>
-    <div class="box">interiority drives action</div>
-    <div class="box">truth resists language</div>
+    <div class="box">silence as structure, not absence</div>
+    <div class="box">dialogue as concealment mechanism</div>
+    <div class="box">framing as psychological boundary</div>
+    <div class="box">interiority shaping external motion</div>
+    <div class="box">image as partial truth</div>
+    <div class="box">story existing between cuts</div>
   </div>
 </div>
 
-<!-- REDACTED -->
+<!-- LAYER 3 -->
 <div class="container" id="three">
   <div class="redacted">
-    I am drawn to the <span class="blackout">visible</span> and what remains hidden.<br><br>
-    My work explores the space between <span class="blackout">seen</span> and unseen.<br><br>
-    Meaning is constructed through absence, silence, implication.<br><br>
-    Dialogue <span class="blackout">communicates clearly</span> conceals.<br><br>
-    I create work where a surface story coexists with something deeper.<br><br>
-    Something just beyond reach.<br><br>
-    I inhabit the in-between.
+    I am drawn to the tension between what is visible and what refuses visibility.<br><br>
+
+    My work treats narrative as something unstable—something that leaks, shifts, and reconfigures itself depending on what is withheld from it.<br><br>
+
+    A character does not simply speak; they displace meaning through speech.<br><br>
+
+    A frame does not contain reality; it interrupts it.<br><br>
+
+    I am interested in the emotional logic of omission—how what is not said reorganizes everything that is.<br><br>
+
+    I make films that exist slightly off from articulation.<br><br>
+
+    Not incomplete—<br>
+    but intentionally unresolved.
   </div>
 </div>
 
@@ -174,25 +206,23 @@ body {
 let sections = ["one","two","three"];
 let dots = document.querySelectorAll(".dot");
 
-/* NAV */
-function show(index) {
-  sections.forEach((id,i)=>{
+function show(i){
+  sections.forEach((id,idx)=>{
     document.getElementById(id).classList.remove("active");
-    dots[i].classList.remove("active");
+    dots[idx].classList.remove("active");
   });
 
-  document.getElementById(sections[index]).classList.add("active");
-  dots[index].classList.add("active");
+  document.getElementById(sections[i]).classList.add("active");
+  dots[i].classList.add("active");
 }
 
-/* INTRO TIMING */
 window.onload = () => {
-  setTimeout(() => {
+  setTimeout(()=>{
     document.getElementById("intro").style.opacity = "0";
-    setTimeout(() => {
+    setTimeout(()=>{
       document.getElementById("intro").style.display = "none";
-    }, 1800);
-  }, 1800);
+    },2000);
+  },2000);
 };
 </script>
 
