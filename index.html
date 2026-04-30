@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Manifesto</title>
+<title>Three Works</title>
 
 <style>
 body {
@@ -10,78 +10,208 @@ body {
   background: black;
   color: white;
   font-family: Helvetica, Arial, sans-serif;
+  overflow: hidden;
+}
+
+/* INTRO */
+#intro {
+  position: fixed;
+  width: 100%;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  background: black;
+  z-index: 10;
+  transition: opacity 1.8s ease;
 }
 
-/* subtle grain */
-body::before {
-  content: "";
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: url('https://grainy-gradients.vercel.app/noise.svg');
-  opacity: 0.08;
-  pointer-events: none;
+#intro h1 {
+  font-weight: 300;
+  letter-spacing: 3px;
+  font-size: 1.1rem;
+  opacity: 0.7;
 }
 
-#text {
-  max-width: 800px;
+/* MENU */
+#menu {
+  display: none;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.option {
+  cursor: pointer;
+  font-size: 1.2rem;
+  opacity: 0.6;
+  transition: 0.4s;
+}
+
+.option:hover {
+  opacity: 1;
+}
+
+/* WORK CONTAINERS */
+.work {
+  display: none;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
   text-align: center;
+}
+
+.active {
+  display: flex !important;
+}
+
+/* WORK I */
+#work1 p {
+  font-size: 1.6rem;
+  line-height: 2.5rem;
+  max-width: 700px;
+}
+
+.blur {
+  filter: blur(8px);
+  transition: 0.6s;
+}
+
+.blur:hover {
+  filter: blur(0);
+}
+
+/* WORK II */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  max-width: 750px;
+}
+
+.box {
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 35px 20px;
+  font-size: 0.95rem;
+}
+
+/* WORK III */
+#dynamic {
+  max-width: 750px;
   font-size: 1.6rem;
   line-height: 2.6rem;
-  letter-spacing: 0.2px;
-  opacity: 0;
-  transition: opacity 1.5s ease;
 }
 
-.small {
-  font-size: 1rem;
-  opacity: 0.6;
-}
-
-/* soft fade states */
-.show {
-  opacity: 1 !important;
+/* BACK BUTTON */
+.back {
+  position: fixed;
+  bottom: 25px;
+  width: 100%;
+  text-align: center;
+  opacity: 0.5;
+  cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div id="text"></div>
+<!-- INTRO -->
+<div id="intro">
+  <h1>THREE WORKS</h1>
+</div>
+
+<!-- MENU -->
+<div id="menu">
+  <div class="option" onclick="openWork('work1')">I — Fragment</div>
+  <div class="option" onclick="openWork('work2')">II — Structure</div>
+  <div class="option" onclick="openWork('work3')">III — Duration</div>
+</div>
+
+<!-- WORK I -->
+<div class="work" id="work1">
+  <p>
+    what is <span class="blur">unseen</span> is not absence, but structure.<br><br>
+    silence functions as pressure rather than emptiness.<br><br>
+    dialogue conceals more than it reveals.<br><br>
+    meaning emerges through what is withheld.
+  </p>
+</div>
+
+<!-- WORK II -->
+<div class="work" id="work2">
+  <div class="grid">
+    <div class="box">silence is structure</div>
+    <div class="box">dialogue is concealment</div>
+    <div class="box">framing is interruption</div>
+    <div class="box">absence is active</div>
+    <div class="box">interiority drives form</div>
+    <div class="box">truth resists articulation</div>
+  </div>
+</div>
+
+<!-- WORK III -->
+<div class="work" id="work3">
+  <div id="dynamic"></div>
+</div>
+
+<div class="back" onclick="back()">← back</div>
 
 <script>
+const intro = document.getElementById("intro");
+const menu = document.getElementById("menu");
+const works = document.querySelectorAll(".work");
+
+setTimeout(()=>{
+  intro.style.opacity = "0";
+  setTimeout(()=>{
+    intro.style.display = "none";
+    menu.style.display = "flex";
+  },1800);
+},1500);
+
+function openWork(id){
+  menu.style.display = "none";
+  works.forEach(w => w.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+
+  if(id === "work3") startDynamic();
+}
+
+function back(){
+  works.forEach(w => w.classList.remove("active"));
+  menu.style.display = "flex";
+}
+
+/* WORK III – slow shifting text */
 const states = [
-`what is unseen is not absence<br>it is structure<br><br><span class="small">meaning begins before it is visible</span>`,
+`meaning does not arrive fully formed<br>it accumulates in delay`,
 
-`silence functions as pressure<br>not emptiness<br><br>dialogue conceals as much as it reveals`,
+`what is not said reorganizes what is said`,
 
-`the frame interrupts reality<br>rather than contains it<br><br>what is outside the frame is still active`,
+`a frame interrupts reality rather than contains it`,
 
-`interiority shapes every external action<br><br>nothing exists in isolation from what is withheld`,
+`story exists in the gap between perception and articulation`,
 
-`I do not construct stories<br>I construct conditions in which stories fail to settle<br><br><span class="small">this is where meaning forms</span>`
+`I construct conditions where meaning cannot settle`
 ];
 
 let i = 0;
-const el = document.getElementById("text");
+let el = document.getElementById("dynamic");
+let interval;
 
-function cycle() {
-  el.classList.remove("show");
-
-  setTimeout(() => {
+function startDynamic(){
+  clearInterval(interval);
+  function cycle(){
     el.innerHTML = states[i];
-    el.classList.add("show");
     i = (i + 1) % states.length;
-  }, 1200);
+  }
+  cycle();
+  interval = setInterval(cycle, 4000);
 }
-
-cycle();
-setInterval(cycle, 5000);
 </script>
 
 </body>
